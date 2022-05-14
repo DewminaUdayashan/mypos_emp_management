@@ -11,7 +11,7 @@ class EmployeeModel {
   final String mobile;
   final String dob;
   final EmployeeType type;
-  final String url;
+  String url;
 
   EmployeeModel({
     required this.id,

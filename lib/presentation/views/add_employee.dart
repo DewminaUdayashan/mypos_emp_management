@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mypos_emp_management/data/data_providers/employee_provider.dart';
-import 'package:mypos_emp_management/logic/add_employee/add_employee_cubit.dart';
-import 'package:mypos_emp_management/presentation/views/widgets/image_placeholder.dart';
+import '../../data/data_providers/employee_provider.dart';
+import '../../logic/add_employee/add_employee_cubit.dart';
+import '../../logic/employees_cubit/employees_cubit.dart';
+import 'widgets/image_placeholder.dart';
 import '../../logic/image_cubit/image_cubit.dart';
 import '../shared/enums.dart';
 import '../shared/helpers/dialog_helper.dart';
@@ -64,6 +65,7 @@ class _AddEmployeeState extends State<AddEmployee> {
             if (state is AddingEmployee) {
               DialogHelper.loadingDialog(context);
             } else if (state is AddEmployeeSuccess) {
+              context.read<EmployeesCubit>().refreshEmployees();
               Navigator.pop(context);
               Navigator.pop(context);
             }
@@ -181,7 +183,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                             email: email.text,
                                             mobile: mobile.text,
                                             name: name.text,
-                                            url: id.text,
+                                            url: '',
                                             dob: dob.text,
                                             type: context
                                                 .read<EmployeeTypeCubit>()

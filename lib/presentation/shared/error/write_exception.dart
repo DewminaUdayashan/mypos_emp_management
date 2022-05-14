@@ -1,33 +1,13 @@
-abstract class ApiException {
+abstract class AppException {
   String? get statusCode;
   String? get message;
 }
 
-class UploadException extends ApiException {
+class ApiException extends AppException {
   String? code;
   String? msg;
 
-  UploadException(
-    this.code,
-    this.msg,
-  );
-  @override
-  String? get message => msg;
-
-  @override
-  String? get statusCode => code;
-
-  @override
-  String toString() {
-    return 'Code : $code, Message : $msg';
-  }
-}
-
-class EmployeeWriteException extends ApiException {
-  String? code;
-  String? msg;
-
-  EmployeeWriteException(
+  ApiException(
     this.code,
     this.msg,
   );

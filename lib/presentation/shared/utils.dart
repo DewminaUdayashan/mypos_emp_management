@@ -8,6 +8,11 @@ EmployeeType stringToEmployeeType(String str) {
   return EmployeeType.temporary;
 }
 
+String employeeTypeToString(EmployeeType employeeType) {
+  if (employeeType == EmployeeType.permenent) return 'Permenent';
+  return 'Temporary';
+}
+
 Future<String?> seletDOB(context) async {
   final dob = await showDatePicker(
     context: context,
