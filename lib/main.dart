@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mypos_emp_management/data/data_providers/employee_provider.dart';
 
+import 'data/repositories/employee_repository.dart';
+import 'logic/employees_cubit/employees_cubit.dart';
 import 'presentation/shared/themes.dart';
 import 'presentation/views/dashboard.dart';
 
@@ -17,11 +21,15 @@ class MyApp extends StatelessWidget {
       designSize: const Size(1080, 2220),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'myPost Employee Management',
-        theme: appTheme,
-        home: child,
+      builder: (child) => BlocProvider(
+        create: (context) =>
+            EmployeesCubit(EmployeeRepository(EmployeeProvider())),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'myPost Employee Management',
+          theme: appTheme,
+          home: child,
+        ),
       ),
       child: const Dashboard(),
     );
