@@ -10,5 +10,9 @@ final ThemeData appTheme = ThemeData(
     bodyText2: TextStyle(
       fontSize: 50.sp,
     ),
+    labelMedium: TextStyle(
+      fontSize: 50.sp,
+      color: Colors.black54,
+    ),
   ),
 );
