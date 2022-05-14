@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:octo_image/octo_image.dart';
+
+import '../../../data/data_providers/employee_provider.dart';
+import '../../../data/employee_model.dart';
+import '../../shared/enums.dart';
+import '../../shared/utils.dart';
 
 const itemRadius = 13.0;
 
 class EmployeeListItem extends StatelessWidget {
-  const EmployeeListItem(this.index, {Key? key}) : super(key: key);
+  const EmployeeListItem(this.index, this.employee, {Key? key})
+      : super(key: key);
   final int index;
+  final EmployeeModel employee;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +49,33 @@ class EmployeeListItem extends StatelessWidget {
                     flex: 1,
                     child: SizedBox(
                       height: 450.h,
-                      child: Image.network(
-                        'https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg',
-                        fit: BoxFit.cover,
-                      ),
+                      child: employee.url == ''
+                          ? Center(
+                              child: Icon(
+                                Icons.person_outline_rounded,
+                                size: 100.w,
+                                color: Colors.grey,
+                              ),
+                            )
+                          : OctoImage(
+                              progressIndicatorBuilder: (context, progress) =>
+                                  Center(
+                                child: CircularProgressIndicator(
+                                  value: progress?.cumulativeBytesLoaded
+                                      .toDouble(),
+                                ),
+                              ),
+                              errorBuilder: (_, __, ___) => Center(
+                                child: Icon(
+                                  Icons.person_outline_rounded,
+                                  color: Colors.grey,
+                                  size: 100.w,
+                                ),
+                              ),
+                              image: NetworkImage(
+                                  '$apiImages/uploads/${employee.url}'),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -63,22 +94,22 @@ class EmployeeListItem extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '✔️​ 01',
+                                    '✔️​ ${employee.id}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
                                   Text(
-                                    '🙋‍♂️​ Jhon Doe',
+                                    '🙋‍♂️​ ${employee.name}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
                                   Text(
-                                    '🎂​ 01/01/1001',
+                                    '🎂​ ${employee.dob}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
                                   Text(
-                                    '📱​ 0765209703',
+                                    '📱​ ${employee.mobile}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
@@ -88,7 +119,7 @@ class EmployeeListItem extends StatelessWidget {
                             children: [
                               ChoiceChip(
                                 label: Text(
-                                  'Permenent',
+                                  employeeTypeToString(employee.type),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText2!
@@ -98,7 +129,10 @@ class EmployeeListItem extends StatelessWidget {
                                       ),
                                 ),
                                 selected: true,
-                                selectedColor: Colors.greenAccent,
+                                selectedColor:
+                                    employee.type == EmployeeType.permenent
+                                        ? Colors.greenAccent
+                                        : Colors.blueGrey,
                               ),
                               const Spacer(),
                               IconButton(
