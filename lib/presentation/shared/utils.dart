@@ -18,7 +18,7 @@ Future<String?> seletDOB(context) async {
     lastDate: DateTime.now(),
   );
   if (dob != null) {
-    final str = Jiffy(dob).format('dd/mm/yyyy');
+    final str = Jiffy(dob).format('dd/MM/yyyy');
     print(str);
     return str;
   }

@@ -45,13 +45,13 @@ class EmployeeModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'email': email,
-      'mobile': mobile,
-      'dob': dob,
-      'type': type.toString(),
-      'url': url,
+      "id": id,
+      "name": name,
+      "email": email,
+      "mobile": mobile,
+      "dob": dob,
+      "type": type.toString(),
+      "url": url,
     };
   }
 

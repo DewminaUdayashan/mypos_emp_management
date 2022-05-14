@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 
 class DialogHelper {
+  static void loadingDialog(context) {
+    showDialog(
+        context: context,
+        builder: (_) => Dialog(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                ),
+              ),
+            ));
+  }
+
   static Future showAddEmployeeScreenLeftDialog(context) async {
     return showDialog(
         context: context,
