@@ -1,25 +1,28 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:octo_image/octo_image.dart';
-
 import '../../../data/data_providers/employee_provider.dart';
 import '../../../data/employee_model.dart';
+import '../../../logic/employees_cubit/employees_cubit.dart';
 import '../../shared/enums.dart';
 import '../../shared/utils.dart';
 
-const itemRadius = 13.0;
+const itemRadius = 30.0;
 
 class EmployeeListItem extends StatelessWidget {
-  const EmployeeListItem(this.index, this.employee, {Key? key})
+  const EmployeeListItem(this.index, this.employee, this.length, {Key? key})
       : super(key: key);
   final int index;
   final EmployeeModel employee;
+  final int length;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        bottom: 16.w,
+        bottom: index == length ? 220.w : 16.w,
         left: 20.w,
         right: 20.w,
         top: index == 0 ? 250.h : 0,
@@ -57,24 +60,28 @@ class EmployeeListItem extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                             )
-                          : OctoImage(
-                              progressIndicatorBuilder: (context, progress) =>
-                                  Center(
-                                child: CircularProgressIndicator(
-                                  value: progress?.cumulativeBytesLoaded
-                                      .toDouble(),
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(itemRadius.r),
+                              child: OctoImage(
+                                progressIndicatorBuilder: (context, progress) =>
+                                    Center(
+                                  child: CircularProgressIndicator(
+                                    value: progress?.cumulativeBytesLoaded
+                                        .toDouble(),
+                                  ),
                                 ),
-                              ),
-                              errorBuilder: (_, __, ___) => Center(
-                                child: Icon(
-                                  Icons.person_outline_rounded,
-                                  color: Colors.grey,
-                                  size: 100.w,
+                                errorBuilder: (_, __, ___) => Center(
+                                  child: Icon(
+                                    Icons.person_outline_rounded,
+                                    color: Colors.grey,
+                                    size: 100.w,
+                                  ),
                                 ),
+                                image: NetworkImage(
+                                  '$apiImages/uploads/${employee.url}',
+                                ),
+                                fit: BoxFit.cover,
                               ),
-                              image: NetworkImage(
-                                  '$apiImages/uploads/${employee.url}'),
-                              fit: BoxFit.cover,
                             ),
                     ),
                   ),
@@ -143,7 +150,11 @@ class EmployeeListItem extends StatelessWidget {
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  context
+                                      .read<EmployeesCubit>()
+                                      .delete(context, index);
+                                },
                                 icon: const Icon(
                                   Icons.delete,
                                   color: Colors.redAccent,

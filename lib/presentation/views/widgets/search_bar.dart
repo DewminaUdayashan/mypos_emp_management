@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mypos_emp_management/logic/employees_cubit/employees_cubit.dart';
 
 class SearchBar extends StatelessWidget {
   const SearchBar({
@@ -17,10 +19,12 @@ class SearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         elevation: 3,
         child: TextFormField(
+          onChanged: (String? term) =>
+              context.read<EmployeesCubit>().search(term),
           decoration: InputDecoration(
             hintText: 'Search',
             labelText: 'Try searching for employee',
-            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             prefixIcon: const Icon(Icons.search),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(100),
