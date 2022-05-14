@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
-import 'package:mypos_emp_management/presentation/views/widgets/employee_list_item.dart';
-import 'package:mypos_emp_management/presentation/views/widgets/search_bar.dart';
+import 'widgets/employee_list_item.dart';
+import 'widgets/search_bar.dart';
 
 import 'add_employee.dart';
 
