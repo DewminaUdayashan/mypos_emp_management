@@ -18,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
           textInputAction: TextInputAction.next,
           keyboardType: text == 'Email'
               ? TextInputType.emailAddress
-              : text == 'Mobile'
+              : text == 'Mobile' || text == 'ID'
                   ? TextInputType.phone
                   : TextInputType.name,
           maxLength: text == 'Mobile' ? 10 : null,

@@ -105,7 +105,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                           ),
                           child: Column(
                             children: [
-                              CustomTextFormField(controller: id, text: "Id"),
+                              CustomTextFormField(controller: id, text: "ID"),
                               CustomTextFormField(
                                   controller: name, text: "Name"),
                               CustomTextFormField(

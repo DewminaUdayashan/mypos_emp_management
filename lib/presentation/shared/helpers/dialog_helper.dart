@@ -55,4 +55,30 @@ class DialogHelper {
           );
         });
   }
+
+  static Future<bool?> shouldDelete(context, name) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Are you sure want to remove $name?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text(
+                  'CANCEL',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text(
+                  'DELETE',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          );
+        });
+  }
 }

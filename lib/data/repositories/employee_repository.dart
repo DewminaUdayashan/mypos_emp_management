@@ -15,4 +15,21 @@ class EmployeeRepository {
       (data) => Right(data.map((e) => EmployeeModel.fromMap(e)).toList()),
     );
   }
+
+  Future<Either<ApiException, List<EmployeeModel>>> searchEmp(
+      String term) async {
+    final res = await employeeProvider.search(term);
+    return res.fold(
+      (l) => Left(l),
+      (data) => Right(data.map((e) => EmployeeModel.fromMap(e)).toList()),
+    );
+  }
+
+  Future<Either<ApiException, bool>> delete(String id) async {
+    final res = await employeeProvider.delete(id);
+    return res.fold(
+      (l) => Left(l),
+      (data) => Right(data),
+    );
+  }
 }

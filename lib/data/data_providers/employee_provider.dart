@@ -46,10 +46,42 @@ class EmployeeProvider {
       fetchEmployees() async {
     try {
       final response = await http.get(Uri.parse('$api/fetchEmployees'));
+      print(response.body);
       if (response.statusCode == 200) {
         return Right(json.decode(response.body).cast<Map<String, dynamic>>());
       }
       return Left(ApiException(response.statusCode.toString(), response.body));
+    } on SocketException {
+      return Left(ApiException('SocketException', 'No internet connection'));
+    }
+  }
+
+  Future<Either<ApiException, List<Map<String, dynamic>>>> search(
+      String term) async {
+    try {
+      final response =
+          await http.post(Uri.parse('$api/searchEmployees'), body: {
+        "term": term,
+      });
+      if (response.statusCode == 200) {
+        return Right(json.decode(response.body).cast<Map<String, dynamic>>());
+      }
+      return Left(ApiException(response.statusCode.toString(), response.body));
+    } on SocketException {
+      return Left(ApiException('SocketException', 'No internet connection'));
+    }
+  }
+
+  Future<Either<ApiException, bool>> delete(String id) async {
+    try {
+      final res = await http.post(Uri.parse('$api/deleteEmployee'), body: {
+        "id": id,
+      });
+      print(res.body);
+      if (res.statusCode == 200) {
+        return Right(json.decode(res.body));
+      }
+      return Left(ApiException(res.statusCode.toString(), res.body));
     } on SocketException {
       return Left(ApiException('SocketException', 'No internet connection'));
     }
