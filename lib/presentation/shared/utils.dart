@@ -4,12 +4,12 @@ import 'package:jiffy/jiffy.dart';
 import 'enums.dart';
 
 EmployeeType stringToEmployeeType(String str) {
-  if (str == 'EmployeeType.permenent') return EmployeeType.permenent;
+  if (str == 'EmployeeType.permanent') return EmployeeType.permanent;
   return EmployeeType.temporary;
 }
 
 String employeeTypeToString(EmployeeType employeeType) {
-  if (employeeType == EmployeeType.permenent) return 'Permenent';
+  if (employeeType == EmployeeType.permanent) return 'Permanent';
   return 'Temporary';
 }
 
@@ -24,7 +24,6 @@ Future<String?> seletDOB(context) async {
   );
   if (dob != null) {
     final str = Jiffy(dob).format('dd/MM/yyyy');
-    print(str);
     return str;
   }
   return null;

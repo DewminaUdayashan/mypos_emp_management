@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
-import '../../presentation/shared/error/write_exception.dart';
+import '../../presentation/shared/error/app_exceptions.dart';
 
 const String api = 'https://sdadaqwfwqfqwf.000webhostapp.com/employee';
 const String apiImages = 'https://sdadaqwfwqfqwf.000webhostapp.com/uploads';
@@ -47,7 +47,6 @@ class EmployeeProvider {
     try {
       final response =
           await http.post(Uri.parse('$api/updateEmployee'), body: json);
-      print(response.body);
       if (response.statusCode == 200) {
         return Right(jsonDecode(response.body));
       } else {
@@ -67,7 +66,6 @@ class EmployeeProvider {
             Uri.parse('$api/fetchEmployees'),
           )
           .timeout(const Duration(seconds: 20));
-      print(response.body);
       if (response.statusCode == 200) {
         return Right(json.decode(response.body).cast<Map<String, dynamic>>());
       }
@@ -98,7 +96,6 @@ class EmployeeProvider {
       final res = await http.post(Uri.parse('$api/deleteEmployee'), body: {
         "id": id,
       });
-      print(res.body);
       if (res.statusCode == 200) {
         return Right(json.decode(res.body));
       }

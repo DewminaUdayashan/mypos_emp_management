@@ -4,9 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../data/data_providers/employee_provider.dart';
 import '../../../logic/employees_cubit/employees_cubit.dart';
 import 'profile_image.dart';
-import 'save_button.dart';
-import 'package:octo_image/octo_image.dart';
-
 import '../../../data/employee_model.dart';
 import '../../../logic/add_employee/add_employee_cubit.dart';
 import '../../../logic/employee_type/employee_type_cubit.dart';
@@ -106,7 +103,7 @@ class _EmpDetailsSheetState extends State<EmpDetailsSheet> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(4.0),
+                              padding: EdgeInsets.all(18.0.r),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.r),
                                 child: InkWell(

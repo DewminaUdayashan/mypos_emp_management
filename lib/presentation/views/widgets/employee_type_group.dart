@@ -18,7 +18,7 @@ class EmployeeTypeRadioGroup extends StatelessWidget {
           direction: Axis.horizontal,
           children: [
             Radio(
-              value: EmployeeType.permenent,
+              value: EmployeeType.permanent,
               groupValue: state.type,
               onChanged: (EmployeeType? type) {
                 if (type != null) {

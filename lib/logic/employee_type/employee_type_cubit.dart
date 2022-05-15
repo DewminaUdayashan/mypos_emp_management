@@ -6,7 +6,7 @@ import '../../presentation/shared/enums.dart';
 part 'employee_type_state.dart';
 
 class EmployeeTypeCubit extends Cubit<EmployeeTypeState> {
-  EmployeeTypeCubit() : super(const EmployeeTypeState(EmployeeType.permenent));
+  EmployeeTypeCubit() : super(const EmployeeTypeState(EmployeeType.permanent));
 
   selectEmployeeType(EmployeeType type) => emit(EmployeeTypeState(type));
 }

@@ -1,4 +1,4 @@
 enum EmployeeType {
-  permenent,
+  permanent,
   temporary,
 }

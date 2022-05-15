@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +6,6 @@ import '../../logic/add_employee/add_employee_cubit.dart';
 import '../../logic/employees_cubit/employees_cubit.dart';
 import 'widgets/image_placeholder.dart';
 import '../../logic/image_cubit/image_cubit.dart';
-import '../shared/enums.dart';
 import '../shared/helpers/dialog_helper.dart';
 import '../shared/utils.dart';
 import 'widgets/custom_text_form_field.dart';
@@ -73,7 +70,8 @@ class _AddEmployeeState extends State<AddEmployee> {
           child: WillPopScope(
             onWillPop: () async {
               return await DialogHelper.showAddEmployeeScreenLeftDialog(
-                  context);
+                      context) ??
+                  false;
             },
             child: Scaffold(
               appBar: AppBar(
@@ -122,7 +120,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                 },
                                 readOnly: true,
                                 validator: (String? text) {
-                                  if (text != null && text!.isNotEmpty ||
+                                  if (text != null && text.isNotEmpty ||
                                       text!.trim() != '') {
                                     return null;
                                   }
@@ -149,7 +147,14 @@ class _AddEmployeeState extends State<AddEmployee> {
                                 children: [
                                   Expanded(
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        final val = await DialogHelper
+                                            .showAddEmployeeScreenLeftDialog(
+                                                context);
+                                        if (val != null && val) {
+                                          Navigator.pop(context);
+                                        }
+                                      },
                                       borderRadius: BorderRadius.circular(15.r),
                                       child: Ink(
                                         decoration: BoxDecoration(
