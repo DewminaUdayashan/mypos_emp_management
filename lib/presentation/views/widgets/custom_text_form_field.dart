@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mypos_emp_management/presentation/shared/utils.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
@@ -34,10 +35,33 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
             ),
           ),
-          validator: (String? text) {
-            if (text != null && text.trim().isNotEmpty) {
+          validator: (String? str) {
+            if (text == 'Mobile') {
+              if (str != null) {
+                if (validateMobile(str)) {
+                  return null;
+                } else {
+                  return 'Enter valid mobile number';
+                }
+              } else {
+                return 'Field should not be empty';
+              }
+            }
+            if (text == 'Email') {
+              if (str != null) {
+                if (validateEmail(str)) {
+                  return null;
+                } else {
+                  return 'Enter valid email';
+                }
+              } else {
+                return 'Field should not be empty';
+              }
+            }
+            if (str != null && str.trim().isNotEmpty) {
               return null;
             }
+
             return 'Field should not be empty';
           },
         ),

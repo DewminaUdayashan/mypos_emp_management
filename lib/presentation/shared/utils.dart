@@ -29,3 +29,19 @@ Future<String?> seletDOB(context) async {
   }
   return null;
 }
+
+bool validateEmail(String value) {
+  const pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  RegExp regex = RegExp(pattern);
+  return regex.hasMatch(value);
+}
+
+bool validateMobile(String value) {
+  String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+  RegExp regExp = RegExp(patttern);
+  if (value.length < 10) {
+    return false;
+  }
+  return regExp.hasMatch(value);
+}

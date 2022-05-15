@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 import '../../presentation/shared/error/write_exception.dart';
 
-const String api = 'http://192.168.1.12/mypos_employee_management_api/employee';
-const String apiImages = 'http://192.168.1.12/mypos_employee_management_api';
+const String api = 'https://sdadaqwfwqfqwf.000webhostapp.com/employee';
+const String apiImages = 'https://sdadaqwfwqfqwf.000webhostapp.com/uploads';
 
 class EmployeeProvider {
   Future<ApiException?> uploadImage({
@@ -42,17 +42,38 @@ class EmployeeProvider {
     }
   }
 
+  Future<Either<ApiException, bool>> updateEmployee(
+      Map<String, dynamic> json) async {
+    try {
+      final response =
+          await http.post(Uri.parse('$api/updateEmployee'), body: json);
+      print(response.body);
+      if (response.statusCode == 200) {
+        return Right(jsonDecode(response.body));
+      } else {
+        return Left(
+            ApiException(response.statusCode.toString(), response.body));
+      }
+    } on SocketException {
+      return Left(ApiException('SocketException', 'No internet connection'));
+    }
+  }
+
   Future<Either<ApiException, List<Map<String, dynamic>>>>
       fetchEmployees() async {
     try {
-      final response = await http.get(Uri.parse('$api/fetchEmployees'));
+      final response = await http
+          .get(
+            Uri.parse('$api/fetchEmployees'),
+          )
+          .timeout(const Duration(seconds: 20));
       print(response.body);
       if (response.statusCode == 200) {
         return Right(json.decode(response.body).cast<Map<String, dynamic>>());
       }
       return Left(ApiException(response.statusCode.toString(), response.body));
-    } on SocketException {
-      return Left(ApiException('SocketException', 'No internet connection'));
+    } catch (e) {
+      return Left(ApiException('Socket Exception', e.toString()));
     }
   }
 

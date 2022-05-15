@@ -2,6 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'emp_details_sheet.dart';
+import 'profile_image.dart';
 import 'package:octo_image/octo_image.dart';
 import '../../../data/data_providers/employee_provider.dart';
 import '../../../data/employee_model.dart';
@@ -12,11 +14,14 @@ import '../../shared/utils.dart';
 const itemRadius = 30.0;
 
 class EmployeeListItem extends StatelessWidget {
-  const EmployeeListItem(this.index, this.employee, this.length, {Key? key})
+  const EmployeeListItem(
+      this.index, this.employee, this.length, this.bottomSheetController,
+      {Key? key})
       : super(key: key);
   final int index;
   final EmployeeModel employee;
   final int length;
+  final AnimationController bottomSheetController;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +45,9 @@ class EmployeeListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(itemRadius.r),
         child: Material(
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              openDetailsSheet(context);
+            },
             borderRadius: BorderRadius.circular(itemRadius.r),
             splashColor: Colors.blueGrey.withOpacity(.3),
             highlightColor: Colors.transparent,
@@ -62,25 +69,9 @@ class EmployeeListItem extends StatelessWidget {
                             )
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(itemRadius.r),
-                              child: OctoImage(
-                                progressIndicatorBuilder: (context, progress) =>
-                                    Center(
-                                  child: CircularProgressIndicator(
-                                    value: progress?.cumulativeBytesLoaded
-                                        .toDouble(),
-                                  ),
-                                ),
-                                errorBuilder: (_, __, ___) => Center(
-                                  child: Icon(
-                                    Icons.person_outline_rounded,
-                                    color: Colors.grey,
-                                    size: 100.w,
-                                  ),
-                                ),
-                                image: NetworkImage(
-                                  '$apiImages/uploads/${employee.url}',
-                                ),
-                                fit: BoxFit.cover,
+                              child: ProfileImage(
+                                employee.url,
+                                key: UniqueKey(),
                               ),
                             ),
                     ),
@@ -101,22 +92,22 @@ class EmployeeListItem extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '✔️​ ${employee.id}',
+                                    'No :​ ${employee.id}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
                                   Text(
-                                    '🙋‍♂️​ ${employee.name}',
+                                    'Name​ : ${employee.name}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
                                   Text(
-                                    '🎂​ ${employee.dob}',
+                                    'Date of Birth​ : ${employee.dob}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
                                   Text(
-                                    '📱​ ${employee.mobile}',
+                                    'Mobile : ${employee.mobile}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
@@ -142,9 +133,9 @@ class EmployeeListItem extends StatelessWidget {
                                         : Colors.blueGrey,
                               ),
                               const Spacer(),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
+                              const IconButton(
+                                onPressed: null,
+                                icon: Icon(
                                   Icons.edit,
                                   color: Colors.blueAccent,
                                 ),
@@ -171,6 +162,24 @@ class EmployeeListItem extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  PersistentBottomSheetController<dynamic> openDetailsSheet(
+      BuildContext context) {
+    return showBottomSheet(
+      context: context,
+      enableDrag: true,
+      elevation: 4,
+      backgroundColor: Colors.white,
+      transitionAnimationController: bottomSheetController,
+      builder: (context) => BottomSheet(
+        animationController: bottomSheetController,
+        enableDrag: true,
+        elevation: 5,
+        onClosing: () {},
+        builder: (context) => EmpDetailsSheet(employee),
       ),
     );
   }

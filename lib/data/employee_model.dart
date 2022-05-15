@@ -5,6 +5,7 @@ import 'package:mypos_emp_management/presentation/shared/enums.dart';
 import 'package:mypos_emp_management/presentation/shared/utils.dart';
 
 class EmployeeModel {
+  final String autId;
   final String id;
   final String name;
   final String email;
@@ -14,6 +15,7 @@ class EmployeeModel {
   String url;
 
   EmployeeModel({
+    required this.autId,
     required this.id,
     required this.name,
     required this.email,
@@ -23,28 +25,9 @@ class EmployeeModel {
     required this.url,
   });
 
-  EmployeeModel copyWith({
-    String? id,
-    String? name,
-    String? email,
-    String? mobile,
-    String? dob,
-    EmployeeType? type,
-    String? url,
-  }) {
-    return EmployeeModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      mobile: mobile ?? this.mobile,
-      dob: dob ?? this.dob,
-      type: type ?? this.type,
-      url: url ?? this.url,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      "aut_id": autId,
       "id": id,
       "name": name,
       "email": email,
@@ -57,6 +40,7 @@ class EmployeeModel {
 
   factory EmployeeModel.fromMap(Map<String, dynamic> map) {
     return EmployeeModel(
+      autId: map["aut_id"].toString(),
       id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
@@ -66,11 +50,6 @@ class EmployeeModel {
       url: map['url'] as String,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory EmployeeModel.fromJson(String source) =>
-      EmployeeModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

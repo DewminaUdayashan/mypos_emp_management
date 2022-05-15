@@ -122,8 +122,10 @@ class _AddEmployeeState extends State<AddEmployee> {
                                 },
                                 readOnly: true,
                                 validator: (String? text) {
-                                  if (text != null) return null;
-
+                                  if (text != null && text!.isNotEmpty ||
+                                      text!.trim() != '') {
+                                    return null;
+                                  }
                                   return 'Please select a date';
                                 },
                                 decoration: InputDecoration(
@@ -179,6 +181,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                       onTap: () {
                                         if (_formKey.currentState!.validate()) {
                                           final employee = EmployeeModel(
+                                            autId: '',
                                             id: id.text,
                                             email: email.text,
                                             mobile: mobile.text,
