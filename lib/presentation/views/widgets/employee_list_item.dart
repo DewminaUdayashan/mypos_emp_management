@@ -1,15 +1,13 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'emp_details_sheet.dart';
-import 'profile_image.dart';
-import 'package:octo_image/octo_image.dart';
-import '../../../data/data_providers/employee_provider.dart';
+
 import '../../../data/employee_model.dart';
 import '../../../logic/employees_cubit/employees_cubit.dart';
 import '../../shared/enums.dart';
 import '../../shared/utils.dart';
+import 'emp_details_sheet.dart';
+import 'profile_image.dart';
 
 const itemRadius = 30.0;
 
@@ -115,22 +113,28 @@ class EmployeeListItem extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              ChoiceChip(
-                                label: Text(
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 40.w,
+                                  vertical: 20.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: employee.type == EmployeeType.permanent
+                                      ? Colors.greenAccent
+                                      : Colors.grey,
+                                ),
+                                child: Text(
                                   employeeTypeToString(employee.type),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText2!
                                       .copyWith(
-                                        fontSize: 15,
+                                        fontSize: 35.sp,
                                         fontStyle: FontStyle.italic,
+                                        color: Colors.white60,
                                       ),
                                 ),
-                                selected: true,
-                                selectedColor:
-                                    employee.type == EmployeeType.permenent
-                                        ? Colors.greenAccent
-                                        : Colors.blueGrey,
                               ),
                               const Spacer(),
                               const IconButton(

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import '../employee_model.dart';
 
-import '../../presentation/shared/error/write_exception.dart';
+import '../../presentation/shared/error/app_exceptions.dart';
 import '../data_providers/employee_provider.dart';
+import '../employee_model.dart';
 
 class EmployeeRepository {
   EmployeeRepository(this.employeeProvider);

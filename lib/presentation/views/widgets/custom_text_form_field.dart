@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mypos_emp_management/presentation/shared/utils.dart';
+
+import '../../shared/utils.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(

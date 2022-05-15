@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'myPost Employee Management',
           theme: appTheme,
+          themeMode: ThemeMode.light,
           home: child,
         ),
       ),

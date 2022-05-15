@@ -4,10 +4,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import '../../data/employee_model.dart';
-import '../../presentation/shared/helpers/dialog_helper.dart';
 
 import '../../data/data_providers/employee_provider.dart';
+import '../../data/employee_model.dart';
 
 part 'add_employee_state.dart';
 
