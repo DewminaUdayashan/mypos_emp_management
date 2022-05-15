@@ -16,10 +16,30 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController bottomSheetController;
+
+  @override
+  void initState() {
+    bottomSheetController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    bottomSheetController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -79,6 +99,7 @@ class _DashboardState extends State<Dashboard> {
                               index,
                               data[index],
                               data.length - 1,
+                              bottomSheetController,
                             ),
                           ),
                         );
@@ -96,6 +117,7 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: () {
           Navigator.push(
             context,

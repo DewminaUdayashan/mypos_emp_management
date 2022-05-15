@@ -16,7 +16,11 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
   final EmployeeProvider employeeProvider;
 
   Future<void> addEmployee(
-      EmployeeModel emp, File? file, BuildContext context) async {
+    EmployeeModel emp,
+    File? file,
+    BuildContext context, {
+    bool isUpdate = false,
+  }) async {
     emit(AddingEmployee());
     if (file != null) {
       String ext = file.path.split('/').last.split('.').last;
@@ -26,16 +30,43 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       );
       emp.url = '${emp.id}.$ext';
     }
+    if (isUpdate) {
+      emit(AddingEmployee());
 
-    final isError = await employeeProvider.addEmployee(emp.toMap());
-    if (isError != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Something went wrong.. ${isError.message}'),
+      final isError = await employeeProvider.updateEmployee(emp.toMap());
+      isError.fold(
+        (l) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Something went wrong.. ${l.code}'),
+          ),
         ),
+        (updated) {
+          if (updated) {
+            emit(
+              const AddEmployeeSuccess(isUpdated: true),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Employee details updated...!',
+                ),
+                backgroundColor: Colors.greenAccent,
+              ),
+            );
+          }
+        },
       );
     } else {
-      emit(AddEmployeeSuccess());
+      final isError = await employeeProvider.addEmployee(emp.toMap());
+      if (isError != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Something went wrong.. ${isError.message}'),
+          ),
+        );
+      } else {
+        emit(const AddEmployeeSuccess());
+      }
     }
   }
 }

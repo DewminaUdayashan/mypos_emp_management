@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import '../../data/employee_model.dart';
 
+import '../../data/employee_model.dart';
 import '../../data/repositories/employee_repository.dart';
 import '../../presentation/shared/helpers/dialog_helper.dart';
 
@@ -21,7 +21,9 @@ class EmployeesCubit extends Cubit<EmployeesState> {
       (exception) => emit(
         EmployeesLoadingError(exception.code!),
       ),
-      (data) => emit(EmployeesLoaded(data)),
+      (data) {
+        emit(EmployeesLoaded(data));
+      },
     );
   }
 
@@ -33,7 +35,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     if (term != null) {
       emit(EmployeesLoading());
       await Future.delayed(const Duration(seconds: 1));
-      final res = await repository.searchEmp(term);
+      final res = await repository.searchEmp(term.trim());
       res.fold(
         (exception) => emit(
           EmployeesLoadingError(exception.code!),
@@ -50,7 +52,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
       final bool? shouldDelete =
           await DialogHelper.shouldDelete(context, emp.name);
       if (shouldDelete != null && shouldDelete) {
-        final res = await repository.delete(emp.id);
+        final res = await repository.delete(emp.autId);
         res.fold(
           (exception) => emit(
             EmployeesLoadingError(exception.code!),
@@ -68,5 +70,9 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         );
       }
     }
+  }
+
+  void employeeUpdated() {
+    refreshEmployees();
   }
 }
